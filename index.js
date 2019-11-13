@@ -1,15 +1,24 @@
-'use strict';
+const AWS = require('aws-sdk');
 
-var fs = require('fs');
-var path = require('path');
+const docClient = new AWS.DynamoDB.DocumentClient();
 
-exports.get = function(event, context, callback) {
-  var contents = fs.readFileSync(`public${path.sep}index.html`);
-  var result = {
-    statusCode: 200,
-    body: contents.toString(),
-    headers: {'content-type': 'text/html'}
-  };
+const handlerFunction = async (event, context, callback) => {
+  try {
+    const userId = '53830990-0648-11ea-b462-0d12a5f4d5ff';
+    const options = {
+      TableName: 'User',
+      Key: { userId }
+    };
+    const user = await docClient.get(options).promise();
+    const result = {
+      statusCode: 200,
+      body: JSON.stringify(user.Item),
+      headers: { 'content-type': 'application/json' }
+    };
 
-  callback(null, result);
+    callback(null, result);
+  } catch (e) {
+    return context.fail(e);
+  }
 };
+exports.handler = handlerFunction;
