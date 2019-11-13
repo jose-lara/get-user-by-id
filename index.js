@@ -4,7 +4,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 const handlerFunction = async (event, context, callback) => {
   try {
-    const userId = '53830990-0648-11ea-b462-0d12a5f4d5ff';
+    const { userId } = event.pathParameters;
     const options = {
       TableName: 'User',
       Key: { userId }
