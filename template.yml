@@ -40,13 +40,6 @@ Resources:
           Properties:
             Path: /api/get-user-by-id/{userId}
             Method: get
-            parameters:
-              - name: userId
-                in: path
-                description: userId
-                required: true
-                schema:
-                  type: string
 
   LambdaExecutionRole:
     Description: Creating service role in IAM for AWS Lambda
