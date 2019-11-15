@@ -12,7 +12,7 @@ const handlerFunction = async (event, context, callback) => {
     const user = await docClient.get(options).promise();
     const result = {
       statusCode: 200,
-      body: JSON.stringify(user.Item.filter(u => u.active)),
+      body: JSON.stringify(user.Item.active ? user.Item : {}),
       headers: { 'content-type': 'application/json' }
     };
 
